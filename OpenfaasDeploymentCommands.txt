@@ -1,0 +1,17 @@
+#START MINIKUBE SESSION
+minikube start
+
+#OPEN PORT FORWARDING
+kubectl port-forward svc/gateway -n openfaas 8080:8080
+
+#DOCKER ACTIVATION
+sudo dockerd
+sudo docker login (provide username and pass)
+
+#GET OPENFAAS PASSWORD
+PASSWORD=$(kubectl get secret -n openfaas basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode; echo)
+
+#CONNECT VIA CLI
+echo -n $PASSWORD | faas-cli login --username admin --password-stdin
+#CONNECT VIA UI
+localhost:8080 ---> user: admin passw: (use echo $PASSWORD and copy-paste)
