@@ -1,2 +1,6 @@
 template
 build
+paps-partition/.idea
+paps-partition/.gradle
+paps-partition/.settings
+paps-partition/gradle
