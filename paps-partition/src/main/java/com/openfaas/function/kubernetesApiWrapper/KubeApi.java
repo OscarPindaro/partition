@@ -41,7 +41,8 @@ public class KubeApi {
         ApiClient client = ClientBuilder.cluster().build();
         // set the global default api-client to the in-cluster one from above
         Configuration.setDefaultApiClient(client);
-
+        coreApi = new CoreV1Api();
+        appsApi= new AppsV1Api();
     }
 
     public static List<V1Node> getNodeList() throws ApiException {
