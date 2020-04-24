@@ -32,6 +32,18 @@ public class KubeApi {
         appsApi= new AppsV1Api();
     }
 
+    public static void setUpApi() throws IOException{
+        // loading the in-cluster config, including:
+        //   1. service-account CA
+        //   2. service-account bearer-token
+        //   3. service-account namespace
+        //   4. master endpoints(ip, port) from pre-set environment variables
+        ApiClient client = ClientBuilder.cluster().build();
+        // set the global default api-client to the in-cluster one from above
+        Configuration.setDefaultApiClient(client);
+
+    }
+
     public static List<V1Node> getNodeList() throws ApiException {
         List<V1Node> list = coreApi.listNode(null, null, null, null,
                 null, null, null, null,
