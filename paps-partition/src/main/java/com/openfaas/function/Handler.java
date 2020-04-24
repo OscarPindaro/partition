@@ -20,7 +20,7 @@ public class Handler implements com.openfaas.model.IHandler {
             res.setBody(list.toString());
         }
         catch (Exception e){
-            res.setBody(e.getStackTrace().toString() + "\nrifiutato");
+            res.setBody("Exception: " + e +"\n" +e.getMessage() + "\n"+e.getStackTrace() + "\nrifiutato");
             System.out.println("rifiutato");
 
 
