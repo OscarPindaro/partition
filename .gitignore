@@ -4,3 +4,14 @@ paps-partition/.idea
  paps-partition/.gradle/
 paps-partition/.settings
 paps-partition/gradle/
+*.aux
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.synctex.gz
+*.toc
+*.tdo
+*.vscode
+*.out
