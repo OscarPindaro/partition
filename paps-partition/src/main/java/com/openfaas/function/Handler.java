@@ -9,6 +9,7 @@ import com.openfaas.model.Response;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.models.V1Node;
 import io.kubernetes.client.models.V1NodeList;
+import com.openfaas.function.partition.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -36,22 +37,24 @@ public class Handler implements com.openfaas.model.IHandler {
 
         InputParser parser = new InputParser(req.getBody(), 4);
         parser.parseFile();
-        res.setBody(parser.getNodes().toString());
+
+        SLPA slpa;
+        try{
+
+            slpa = new SLPA(parser.getDelayMatrix(), 0.6);
+        }
+        catch(ApiException api){
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            api.printStackTrace(pw);
+            res.setBody("Exception: " + api +"\nMessage: " +api.getMessage() + "\nStacktrace:\n" + sw.toString());
+            System.out.println("rifiutato");
+        }
+
+        res.setBody(slpa.topologyNodes.get(0).getNodeID().toString() + "\n" + slpa.topologyNodes.get(0).getKubeNode().toString());
+
         return res;
-//        StringWriter sw = new StringWriter();
-//        PrintWriter pw = new PrintWriter(sw);
-//
-//        for (String node: parser.getNodes()) {
-//            pw.println(node);
-//            float[] delays = parser.getDelayMatrix()[parser.getNodes().indexOf(node)];
-//            for (int i = 0; i < delays.length; i++) {
-//                pw.println(delays[i]);
-//            }
-//        }
-//
-//        res.setBody(sw.toString());
-//
-//	    return res;
+
     }
 
 

@@ -8,7 +8,7 @@ import java.util.*;
 
 public class SLPA {
 
-    private List<SLPA_Node> topologyNodes;  //list of all tje nodes present in the topology
+    public List<SLPA_Node> topologyNodes;  //list of all tje nodes present in the topology
 
     // constructor
     public SLPA(float[][] delayMatrix, float delayThreshold) throws io.kubernetes.client.ApiException {
