@@ -28,13 +28,13 @@ public class Handler implements com.openfaas.model.IHandler {
             res.setBody("Exception: " + e +"\nMessage: " +e.getMessage() + "\nStacktrace:\n" + sw.toString());
             return res;
         }
+
+        int numLines = countLines(req.getBody());
+        if (numLines == -1){
+            res.setBody("Errore num lines " + numLines);
+        }
         res.setBody("ciaone");
         return res;
-
-//        int numLines = countLines(req.getBody());
-//        if (numLines == -1){
-//            res.setBody("Errore num lines " + numLines);
-//        }
 //        InputParser parser = new InputParser(req.getBody(), 4);
 //        parser.parseFile();
 //        StringWriter sw = new StringWriter();
