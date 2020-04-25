@@ -28,27 +28,29 @@ public class Handler implements com.openfaas.model.IHandler {
             res.setBody("Exception: " + e +"\nMessage: " +e.getMessage() + "\nStacktrace:\n" + sw.toString());
             return res;
         }
+        res.setBody("ciaone");
+        return res;
 
 //        int numLines = countLines(req.getBody());
 //        if (numLines == -1){
 //            res.setBody("Errore num lines " + numLines);
 //        }
-        InputParser parser = new InputParser(req.getBody(), 4);
-        parser.parseFile();
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-
-        for (String node: parser.getNodes()) {
-            pw.println(node);
-            float[] delays = parser.getDelayMatrix()[parser.getNodes().indexOf(node)];
-            for (int i = 0; i < delays.length; i++) {
-                pw.println(delays[i]);
-            }
-        }
-
-        res.setBody(sw.toString());
-
-	    return res;
+//        InputParser parser = new InputParser(req.getBody(), 4);
+//        parser.parseFile();
+//        StringWriter sw = new StringWriter();
+//        PrintWriter pw = new PrintWriter(sw);
+//
+//        for (String node: parser.getNodes()) {
+//            pw.println(node);
+//            float[] delays = parser.getDelayMatrix()[parser.getNodes().indexOf(node)];
+//            for (int i = 0; i < delays.length; i++) {
+//                pw.println(delays[i]);
+//            }
+//        }
+//
+//        res.setBody(sw.toString());
+//
+//	    return res;
     }
 
 
