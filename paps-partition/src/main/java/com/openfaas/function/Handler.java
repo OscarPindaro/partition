@@ -33,10 +33,11 @@ public class Handler implements com.openfaas.model.IHandler {
         if (numLines == -1){
             res.setBody("Errore num lines " + numLines);
         }
-        res.setBody("" + numLines);
+
+        InputParser parser = new InputParser(req.getBody(), 4);
+        parser.parseFile();
+        res.setBody(parser.getNodes().toString());
         return res;
-//        InputParser parser = new InputParser(req.getBody(), 4);
-//        parser.parseFile();
 //        StringWriter sw = new StringWriter();
 //        PrintWriter pw = new PrintWriter(sw);
 //

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class InputParser {
 
-    private final File file;
+//    private final File file;
     private final Scanner input;
     private final List<String> nodes;
     private float[][] delayMatrix;
@@ -25,8 +25,8 @@ public class InputParser {
 //    }
 
     public InputParser(String inputString, int numberOfNodes){
-        this.file = null;
-        this.input = new Scanner(new String(inputString));
+//        this.file = null;
+        this.input = new Scanner(inputString);
         this.nodes = new LinkedList<>();
         this.delayMatrix = new float[numberOfNodes][numberOfNodes];
     }
