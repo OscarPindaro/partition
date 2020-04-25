@@ -56,24 +56,24 @@ public class InputParser {
     }
 
 
-    public static void main(String[] args) {
-
-        String path = "input.txt";
-        try {
-            InputParser parser = new InputParser(path, 4);
-            parser.parseFile();
-            for (String node: parser.getNodes()) {
-                System.out.println(node);
-                float[] delays = parser.getDelayMatrix()[parser.getNodes().indexOf(node)];
-                for (int i = 0; i < delays.length; i++) {
-                    System.out.println(delays[i]);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.notify();
-        }
-
-    }
+//    public static void main(String[] args) {
+//
+//        String path = "input.txt";
+//        try {
+//            InputParser parser = new InputParser(path, 4);
+//            parser.parseFile();
+//            for (String node: parser.getNodes()) {
+//                System.out.println(node);
+//                float[] delays = parser.getDelayMatrix()[parser.getNodes().indexOf(node)];
+//                for (int i = 0; i < delays.length; i++) {
+//                    System.out.println(delays[i]);
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.notify();
+//        }
+//
+//    }
 
 }
 
