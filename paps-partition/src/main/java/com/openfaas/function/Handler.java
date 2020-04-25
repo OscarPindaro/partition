@@ -18,10 +18,22 @@ public class Handler implements com.openfaas.model.IHandler {
 
     public IResponse Handle(IRequest req) {
         Response res = new Response();
-        setUpApi(res);
+        try{
+            KubeApi.setUpApi();
+        }
+        catch (Exception e){
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            res.setBody("Exception: " + e +"\nMessage: " +e.getMessage() + "\nStacktrace:\n" + sw.toString());
+            return res;
+        }
 
-
-        InputParser parser = new InputParser(req.getBody(), countLines(req.getBody()));
+        int numLines = countLines(req.getBody());
+        if (numLines == -1){
+            res.setBody("Errore num lines " + numLines);
+        }
+        InputParser parser = new InputParser(req.getBody(), numLines);
         parser.parseFile();
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -43,7 +55,7 @@ public class Handler implements com.openfaas.model.IHandler {
 
     private static int countLines(String str){
         if(str == null){
-            throw new NullPointerException("Null String passed as argument");
+            return -1;
         }
         int numLines = 0;
         for(int i=0; i < str.length(); i++){
