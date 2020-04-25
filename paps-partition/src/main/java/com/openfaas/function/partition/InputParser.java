@@ -15,14 +15,22 @@ public class InputParser {
 
 
 
-    public InputParser(String pathToFile, int numberOfNodes) throws FileNotFoundException {
+//    public InputParser(String pathToFile, int numberOfNodes) throws FileNotFoundException {
+//
+//        this.file = new File(pathToFile);
+//        this.input = new Scanner(file);
+//        this.nodes = new LinkedList<>();
+//        this.delayMatrix = new float[numberOfNodes][numberOfNodes];
+//
+//    }
 
-        this.file = new File(pathToFile);
-        this.input = new Scanner(file);
+    public InputParser(String inputString, int numberOfNodes){
+        this.file = null;
+        this.input = new Scanner(new String(inputString));
         this.nodes = new LinkedList<>();
         this.delayMatrix = new float[numberOfNodes][numberOfNodes];
-
     }
+
 
 
     public float[][] getDelayMatrix() { return delayMatrix; }
