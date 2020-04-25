@@ -5,6 +5,7 @@ import com.openfaas.model.IHandler;
 import com.openfaas.model.IResponse;
 import com.openfaas.model.IRequest;
 import com.openfaas.model.Response;
+import io.kubernetes.client.ApiException;
 import io.kubernetes.client.models.V1Node;
 import io.kubernetes.client.models.V1NodeList;
 
@@ -20,6 +21,12 @@ public class Handler implements com.openfaas.model.IHandler {
             KubeApi.setUpApi();
             List<V1Node> list = KubeApi.getNodeList();
             res.setBody(list.toString());
+        }
+        catch (ApiException api){
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            api.printStackTrace(pw);
+            res.setBody("Exception: " + api +"\nMessage: " +api.getMessage() + "\nResponde body\n" + api.getResponseBody() + "\nStacktrace:\n" + sw.toString()  + "\nrifiutato");
         }
         catch (Exception e){
             StringWriter sw = new StringWriter();

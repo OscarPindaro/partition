@@ -6,6 +6,7 @@ import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.AppsV1Api;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1Node;
+import io.kubernetes.client.models.V1NodeList;
 import io.kubernetes.client.util.ClientBuilder;
 import io.kubernetes.client.util.KubeConfig;
 
@@ -58,6 +59,11 @@ public class KubeApi {
     }
 
     public static List<V1Node> getNodeList() throws ApiException {
+        V1NodeList l = coreApi.listNode(null, null, null, null,
+                null, null, null, null,
+                null);
+
+
         List<V1Node> list = coreApi.listNode(null, null, null, null,
                 null, null, null, null,
                 null).getItems();
