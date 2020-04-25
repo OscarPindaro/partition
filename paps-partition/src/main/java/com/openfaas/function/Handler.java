@@ -29,11 +29,11 @@ public class Handler implements com.openfaas.model.IHandler {
             return res;
         }
 
-        int numLines = countLines(req.getBody());
-        if (numLines == -1){
-            res.setBody("Errore num lines " + numLines);
-        }
-        InputParser parser = new InputParser(req.getBody(), numLines);
+//        int numLines = countLines(req.getBody());
+//        if (numLines == -1){
+//            res.setBody("Errore num lines " + numLines);
+//        }
+        InputParser parser = new InputParser(req.getBody(), 4);
         parser.parseFile();
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
