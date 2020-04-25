@@ -8,6 +8,8 @@ import com.openfaas.model.Response;
 import io.kubernetes.client.models.V1Node;
 import io.kubernetes.client.models.V1NodeList;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
 public class Handler implements com.openfaas.model.IHandler {
@@ -20,7 +22,10 @@ public class Handler implements com.openfaas.model.IHandler {
             res.setBody(list.toString());
         }
         catch (Exception e){
-            res.setBody("Exception: " + e +"\n" +e.getMessage() + "\n"+e.getStackTrace() + "\nrifiutato");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            res.setBody("Exception: " + e +"\nMessage: " +e.getMessage() + "\nStacktrace:\n" + sw.toString()  + "\nrifiutato");
             System.out.println("rifiutato");
 
 

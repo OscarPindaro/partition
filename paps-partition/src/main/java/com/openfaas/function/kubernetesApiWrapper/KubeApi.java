@@ -38,9 +38,21 @@ public class KubeApi {
         //   2. service-account bearer-token
         //   3. service-account namespace
         //   4. master endpoints(ip, port) from pre-set environment variables
-        ApiClient client = ClientBuilder.cluster().build();
+        ApiClient client = null;
+        try{
+            client = ClientBuilder.cluster().build();
+        }
+        catch(Exception e){
+            throw new IOException("problemi mentre buildiamo il cluster");
+        }
         // set the global default api-client to the in-cluster one from above
-        Configuration.setDefaultApiClient(client);
+        try
+        {
+            Configuration.setDefaultApiClient(client);
+        }
+        catch(Exception e){
+            throw new IOException("errore mentre settiamo il default api client");
+        }
         coreApi = new CoreV1Api();
         appsApi= new AppsV1Api();
     }
