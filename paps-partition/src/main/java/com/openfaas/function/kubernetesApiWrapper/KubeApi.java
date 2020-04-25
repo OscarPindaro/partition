@@ -53,8 +53,8 @@ public class KubeApi {
         catch(Exception e){
             throw new IOException("errore mentre settiamo il default api client");
         }
-        coreApi = new CoreV1Api();
-        appsApi= new AppsV1Api();
+        coreApi = new CoreV1Api(client);
+        appsApi= new AppsV1Api(client);
     }
 
     public static List<V1Node> getNodeList() throws ApiException {
