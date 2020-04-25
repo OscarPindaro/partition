@@ -41,7 +41,7 @@ public class Handler implements com.openfaas.model.IHandler {
         SLPA slpa;
         try{
 
-            slpa = new SLPA(parser.getDelayMatrix(), 0.6);
+            slpa = new SLPA(parser.getDelayMatrix(), 0.6f);
         }
         catch(ApiException api){
             StringWriter sw = new StringWriter();
