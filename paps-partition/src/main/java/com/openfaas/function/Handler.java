@@ -42,6 +42,7 @@ public class Handler implements com.openfaas.model.IHandler {
         try{
 
             slpa = new SLPA(parser.getDelayMatrix(), 0.6f);
+            res.setBody(slpa.topologyNodes.get(0).getNodeID() + "\n" + slpa.topologyNodes.get(0).getKubeNode().toString());
         }
         catch(ApiException api){
             StringWriter sw = new StringWriter();
@@ -51,7 +52,7 @@ public class Handler implements com.openfaas.model.IHandler {
             System.out.println("rifiutato");
         }
 
-        res.setBody(slpa.topologyNodes.get(0).getNodeID().toString() + "\n" + slpa.topologyNodes.get(0).getKubeNode().toString());
+
 
         return res;
 
