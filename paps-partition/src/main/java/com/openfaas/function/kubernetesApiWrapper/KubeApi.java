@@ -15,13 +15,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * this class is a wrapper for the kubernetes-client java API.
+ * No object needs to be instantiated, since all it's methods are static.
+ */
 public class KubeApi {
 
+    /**
+     * This object handles the REST calls of the node object.
+     */
     private static CoreV1Api coreApi;
 
-    private static AppsV1Api appsApi;
-
-    //TODO controllare che sia il setup per nodi all'interno di kubernetes
+    /**
+     * This method is used to call the API from outside the cluster
+     * @param kubeConfigPath the path of the config file. Usually at $HOME/.kube/config.
+     * @throws FileNotFoundException If the path of the file it not correct
+     * @throws IOException
+     */
     public static void setUpApi(String kubeConfigPath) throws FileNotFoundException, IOException {
         // loading the out-of-cluster config, a kubeconfig from file-system
         ApiClient client =
@@ -30,9 +40,12 @@ public class KubeApi {
         Configuration.setDefaultApiClient(client);
 
         coreApi = new CoreV1Api();
-        appsApi= new AppsV1Api();
     }
 
+    /**
+     * This method builds the client so that it can call the kubernetes API inside a pod.
+     * @throws IOException
+     */
     public static void setUpApi() throws IOException{
         // loading the in-cluster config, including:
         //   1. service-account CA
@@ -44,7 +57,7 @@ public class KubeApi {
             client = ClientBuilder.cluster().build();
         }
         catch(Exception e){
-            throw new IOException("problemi mentre buildiamo il cluster");
+            throw new IOException(e.getMessage() + ". Problems while building the client.");
         }
         // set the global default api-client to the in-cluster one from above
         try
@@ -52,18 +65,12 @@ public class KubeApi {
             Configuration.setDefaultApiClient(client);
         }
         catch(Exception e){
-            throw new IOException("errore mentre settiamo il default api client");
+            throw new IOException(e.getMessage() + ".\n Error while adding the client to the configuration");
         }
         coreApi = new CoreV1Api(client);
-        appsApi= new AppsV1Api(client);
     }
 
     public static List<V1Node> getNodeList() throws ApiException {
-        V1NodeList l = coreApi.listNode(null, null, null, null,
-                null, null, null, null,
-                null);
-
-
         List<V1Node> list = coreApi.listNode(null, null, null, null,
                 null, null, null, null,
                 null).getItems();
