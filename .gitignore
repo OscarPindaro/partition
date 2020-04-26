@@ -15,3 +15,4 @@ paps-partition/gradle/
 *.tdo
 *.vscode
 *.out
+minikube-helpers
