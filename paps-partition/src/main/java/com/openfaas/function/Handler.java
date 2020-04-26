@@ -52,19 +52,19 @@ public class Handler implements com.openfaas.model.IHandler {
             PrintWriter pw = new PrintWriter(sw);
             api.printStackTrace(pw);
             res.setBody("Exception: " + api +"\nMessage: " +api.getMessage() + "\nStacktrace:\n" + sw.toString());
-            System.out.println("rifiutato");
+            System.out.println("api error");
         }
-        catch(RuntimeExceptio run){
+        catch(RuntimeException run){
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
-            api.printStackTrace(pw);
+            run.printStackTrace(pw);
             res.setBody("Exception: " + run +"\nMessage: " +run.getMessage() + "\nStacktrace:\n" + sw.toString());
             System.out.println("empty node list");
         }
-        catch (Exception ex){
+        catch(Exception ex){
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
-            api.printStackTrace(pw);
+            ex.printStackTrace(pw);
             res.setBody("Exception: " + ex +"\nMessage: " +ex.getMessage() + "\nStacktrace:\n" + sw.toString());
             System.out.println("other exception");
 
