@@ -106,12 +106,12 @@ public class InputParser {
                     }
                 }
             }
-
-            if (nextParameter.equals("")) {
-                throw new RuntimeException("Empty input file");
-            }
-
         }
+
+        if (nextParameter.equals("")) {
+            throw new RuntimeException("Empty input file");
+        }
+
     }
 
 
