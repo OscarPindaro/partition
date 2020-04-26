@@ -1,0 +1,31 @@
+PAPS is an edge computing framework which aims to improve network performances of some 
+applications moving the computation closer to the final user instead of doing that on 
+a centralized server. This will reduce the amount of traffic flowing into the network
+with the result of an improvement of the throughput allowing to better meet the SLAs
+of delay sensitive applications.
+
+This framework focuses on MEC topologies, composed of geo-distributed nodes which access
+the system through cellular base stations. In a typical topology is possible to identify
+two different networks: the \textit{fronthaul network}, which connects normal nodes to 
+the MEC stations, and the \textit{backhaul network}, which interconnects the MEC stations.
+PAPS aims to reduce the complexity of the problem working at three different levels: 
+\textit{system, community and node}. 
+\\
+\subsubsection*{System level}
+Since MEC topologies can be really big and complex, the first step is to \textit{partition}
+the network in multiple delay-aware sub-networks called \textit{communities}. Each community
+is composed by a set of nodes whose propagation delay from one another is below a given 
+threshold. PAPS assumes the availability of a \textit{supervisor} that has a global view of
+the MEC topology and uses SLPA \cite{SLPA} to create the communities. Each community will
+elect a \textit{leader} which will be in charge of managing the community and the communication
+between the nodes.
+
+\subsubsection*{Community level}
+Communities aims to minimize the likelihood of of SLA violations so that the MEC nodes
+can operate under feasible conditions.\\
+Each community leader will manage the \textit{allocation and placement} phases by looking at 
+the aggregate demand to each service and the node capacities in order to decide how to 
+distribute resources among the nodes in its community. This is done solving a \textit{mixed
+integer programming (MIP)} problem whose goal is to minimize the overall community delay. 
+The MIP is solved periodically by the community leader which will then contact the other members
+to communicate the new configuration.

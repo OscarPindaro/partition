@@ -1,0 +1,60 @@
+\documentclass{article} %document style and layout
+\usepackage[table, dvipsnames]{xcolor} %colors for tables and text
+\usepackage{graphicx} %
+\usepackage{tabu} %creation of tables
+\usepackage{array}
+\usepackage{enumitem} %list of elements
+\usepackage{hyperref} %insert clickable links
+\urlstyle{same}
+\usepackage{subfig} 
+\setcounter{lofdepth}{2} %subfig used to have more than 1 figure together, \setcounter used to add subfigures in the list of figures
+\usepackage{float}
+
+%-------Titlepage information------------------------------------------
+\title{\textbf{\huge{PAPS: A first step into the implementation phase. Partitioning a network.}}}
+\author{\color{black}Fabio Losavio, Oscar Francesco Pindaro \\ \\
+        Dipartimento di Elettronica, Informazione e Bioingengeria \\
+        Politecnico di Milano, Italy \\
+        \texttt{\{fabio.losavio,oscarfrancesco.pindaro\}@mail.polimi.it}}
+\date{xx - May - 2020}
+%------------------------------------------------------------------------
+
+
+%DOCUMENT BEGINNING
+\begin{document}
+%TITLEPAGE and ABSTRACT
+\maketitle
+
+\begin{abstract}
+    The emergence of latency-sensitive and data-intensive applications requires to move the 
+    computational power closer to users on nodes at the edge of the network (\textit{edge computing}).
+    This work starts from PAPS \cite{PAPS}, a framework which aims to tackle the complexity of edge 
+    infrastructures by means of decentralized self-management and serverless computing. This paper
+    shows how the first of the four PAPS phases, \textit{partitioning}, is implemented and integrated
+    with a common open-source system: Kubernetes \cite{Kube}, to easily deploy the system in an already
+    existing network. The partitioning is mainly focussed on the division of the network in multiple 
+    communities in order to reduce the scope of the following parts. The division is performed using 
+    the SLPA \cite{SLPA} algorithm, which uses a label spreading technique to assign each node to a
+    community. Once all the nodes are assigned, the Kubernetes node will be modified using the API 
+    labeling it in order to easily recognize and manage each community.
+    \\ \\
+    \textbf{Keywords:} Edge computing \textbf{\textperiodcentered} Partition 
+    \textbf{\textperiodcentered} Kubernetes \textbf{\textperiodcentered} PAPS
+    \textbf{\textperiodcentered} Community division \textbf{\textperiodcentered} SLPA
+    
+\end{abstract}
+%------------------------------------------------------------------------------------------------------------------------------------------------
+{{\section{Introduction}\label{sect:intro}}}
+\input{Introduction.tex}
+
+
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+{{\section{References}\label{sect:biblio}}}
+\input{Bibliography.tex}
+
+
+
+\end{document}
