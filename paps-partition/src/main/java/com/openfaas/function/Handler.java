@@ -14,6 +14,7 @@ import com.openfaas.function.partition.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Handler implements com.openfaas.model.IHandler {
@@ -22,7 +23,7 @@ public class Handler implements com.openfaas.model.IHandler {
 
 
         Logger logger = Logger.getLogger(Handler.class.getName());
-        logger.log("hello mama, SONO OSCAAAAR");
+        logger.log(Level.INFO, "Sto provando il logger");
         Response res = new Response();
         /***** instantiate kubernetes api *****/
         try{
