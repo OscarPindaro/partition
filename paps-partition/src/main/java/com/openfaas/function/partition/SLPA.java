@@ -15,6 +15,7 @@ public class SLPA {
 
         List<V1Node> kubeNodes = KubeApi.getNodeList();
         kubeNodes.sort(Comparator.comparing(a -> a.getMetadata().getName()));
+        topologyNodes = new LinkedList<>();
 
         if (!kubeNodes.isEmpty()) {
             for (V1Node node : kubeNodes) {
