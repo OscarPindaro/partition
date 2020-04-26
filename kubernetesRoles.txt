@@ -1,0 +1,8 @@
+Normally the partition placed int he container doesnt have permissions to read and update resources from the kubernetes API.
+In order to solve this:
+
+-> kubectl create -f NodeRole
+-> kubectl create <binding-nome> --clusterrole=<nameInNodeRole> --user=<partitionUser>
+
+in this case, the user should be openfaas-fn:deafult (you can read it in the exception rased by the container with error code 503)
+
