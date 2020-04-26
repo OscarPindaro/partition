@@ -22,8 +22,8 @@ public class Handler implements com.openfaas.model.IHandler {
     public IResponse Handle(IRequest req) {
 
 
-        Logger logger = Logger.getLogger(Handler.class.getName());
-        logger.log(Level.INFO, "Sto provando il logger");
+//        Logger logger = Logger.getLogger(Handler.class.getName());
+//        logger.log(Level.INFO, "Sto provando il logger");
         Response res = new Response();
         /***** instantiate kubernetes api *****/
         try{

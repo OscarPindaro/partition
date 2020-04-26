@@ -3,29 +3,39 @@ package com.openfaas.function.partition;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.models.V1Node;
 import com.openfaas.function.kubernetesApiWrapper.KubeApi;
-
+import io.kubernetes.client.proto.V1;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SLPA {
 
-    public List<SLPA_Node> topologyNodes;  //list of all tje nodes present in the topology
+    private List<SLPA_Node> topologyNodes;  //list of all tje nodes present in the topology
 
     // constructor
-    public SLPA(float[][] delayMatrix, float delayThreshold) throws io.kubernetes.client.ApiException {
+    public SLPA(float[][] delayMatrix, float delayThreshold, List<String> hosts) throws io.kubernetes.client.ApiException, RuntimeException {
+        createTopologyNodesList(hosts);
+        computeTopologyMatrix(delayMatrix, delayThreshold);
+    }
 
+    private void createTopologyNodesList(List<String> hosts) throws  io.kubernetes.client.ApiException{
         List<V1Node> kubeNodes = KubeApi.getNodeList();
-        kubeNodes.sort(Comparator.comparing(a -> a.getMetadata().getName()));
+        List<String> kubeHostNames = kubeNodes.stream().map( k -> k.getMetadata().getName()).collect(Collectors.toList());
         topologyNodes = new LinkedList<>();
+        for(String hostname : hosts){
+            if(!kubeHostNames.contains(hostname))
+                throw new RuntimeException("This host is not in the kubernetes cluster");
 
-        if (!kubeNodes.isEmpty()) {
-            for (V1Node node : kubeNodes) {
-                topologyNodes.add(new SLPA_Node(node));
-            }
-            computeTopologyMatrix(delayMatrix, delayThreshold);
+            V1Node node = getNode(kubeNodes, hostname);
+            topologyNodes.add(new SLPA_Node(node));
         }
-        else{
-            throw new RuntimeException("Kubernetes getNodeList returned an empty list");
+    }
+
+    private V1Node getNode(List<V1Node> kubeNodes, String name){
+        for(V1Node node: kubeNodes ){
+            if (node.getMetadata().getName().equals(name))
+                return node;
         }
+        throw new RuntimeException("No node with this name in kubernetes");
     }
 
 
