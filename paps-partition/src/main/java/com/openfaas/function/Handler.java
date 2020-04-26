@@ -14,11 +14,15 @@ import com.openfaas.function.partition.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Handler implements com.openfaas.model.IHandler {
 
     public IResponse Handle(IRequest req) {
 
+
+        Logger logger = Logger.getLogger(Handler.class.getName());
+        logger.log("hello mama, SONO OSCAAAAR");
         Response res = new Response();
         /***** instantiate kubernetes api *****/
         try{
@@ -52,7 +56,6 @@ public class Handler implements com.openfaas.model.IHandler {
             PrintWriter pw = new PrintWriter(sw);
             api.printStackTrace(pw);
             res.setBody("Exception: " + api +"\nMessage: " +api.getMessage() + "\nStacktrace:\n" + sw.toString());
-            System.out.println("rifiutato");
         }
 
         return res;
