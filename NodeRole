@@ -2,8 +2,8 @@ kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: default
-  name: node-reader
+  name: node-reader-updater
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["nodes"]
-  verbs: ["get", "watch", "list"]
+  verbs: ["get", "list", "update"]

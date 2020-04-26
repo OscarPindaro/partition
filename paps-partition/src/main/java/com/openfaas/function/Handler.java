@@ -18,7 +18,9 @@ import java.util.List;
 public class Handler implements com.openfaas.model.IHandler {
 
     public IResponse Handle(IRequest req) {
+
         Response res = new Response();
+        /***** instantiate kubernetes api *****/
         try{
             KubeApi.setUpApi();
         }
@@ -27,12 +29,13 @@ public class Handler implements com.openfaas.model.IHandler {
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             res.setBody("Exception: " + e +"\nMessage: " +e.getMessage() + "\nStacktrace:\n" + sw.toString());
-            return res;
         }
 
+        /***** creation of the parser ******/
         int numLines = countLines(req.getBody());
         if (numLines == -1){
             res.setBody("Errore num lines " + numLines);
+            return res;
         }
 
         InputParser parser = new InputParser(req.getBody(), 4);
