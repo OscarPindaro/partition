@@ -29,3 +29,12 @@ distribute resources among the nodes in its community. This is done solving a \t
 integer programming (MIP)} problem whose goal is to minimize the overall community delay. 
 The MIP is solved periodically by the community leader which will then contact the other members
 to communicate the new configuration.
+
+\subsection*{Node level}
+The Node-Level Self-Management system aims to keep the response time for a given function fixed, 
+by deploying and removing containers accordingly to the measured workload.
+In order to achieve this, every node has a controller for each function that is hosting; all the controllers
+run in parallel and independently.
+Each controller accepts as input the number of container allocated for its function and the 
+measured arrival rate, and outputs the response time. The objective is to keep the response time
+at the control set point, which must be lower than the SLA.
