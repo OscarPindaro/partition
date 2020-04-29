@@ -140,6 +140,18 @@ public class SLPA {
 
         }
 
+        returnCommunities = shrinkCommunities(returnCommunities, maxSize);
+
+        return returnCommunities;
+    }
+
+    private List<Community> shrinkCommunities(List<Community> communities, int maxSize){
+        List<Community> returnCommunities = new LinkedList<>();
+        for(Community community: communities){
+            List<Community> decomposed = CommunityBuilder.decomposeCommunity(community, maxSize);
+            returnCommunities.addAll(decomposed);
+        }
+
         return returnCommunities;
     }
 
