@@ -1,0 +1,14 @@
+\subsubsection*{Framework research}
+To start the process of developing PAPS, the first thing was to search for any useful tool 
+that could speed up the process of creating what was designed.  
+The starting idea was to use OpenWhisk \cite{OpenWhisk}, a serverless platform able to run 
+functions on top of an infrastructure. The idea was to integrate it on top of a kubernetes 
+cluster, running a series of docker \cite{Docker} containers. \\
+Searching on the internet information about the integration of those platforms, other two 
+option were available: OpenFaas \cite{Faas} and Kubeless \cite{Kubeless}. For what concerns 
+the functionalities the three frameworks are pretty similar one to another. OpenWhisk and 
+OpenFaas work almost in the same way, both are used in many applications nowadays. 
+Kubeless has a built in synergy with kubernetes, since is written on top of it,  and for 
+that reason could be a good alternative. The main issue with OpenWhisk and Kubeless is 
+that they are written in Scala and Akka and their structure is pretty complex so they could
+result complex to use and understand them.
