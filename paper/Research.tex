@@ -10,5 +10,20 @@ the functionalities the three frameworks are pretty similar one to another. Open
 OpenFaas work almost in the same way, both are used in many applications nowadays. 
 Kubeless has a built in synergy with kubernetes, since is written on top of it,  and for 
 that reason could be a good alternative. The main issue with OpenWhisk and Kubeless is 
-that they are written in Scala and Akka and their structure is pretty complex so they could
-result complex to use and understand them.
+that they are written in Scala and Akka, OpenWhisk also has a complex structure and for that reason 
+is not optimal for a project like this. For what concerns OpenFaas, it is written
+in Go and offers a lot of additional features like a metrics system and the possibility to 
+customize the scheduling policy used by the framework. During the research process one main
+problem came out, all the frameworks have the characteristic to hide to the final user 
+the underlying structure making it hard to integrate PAPS functionalities in it.
+To solve this issue, the best decision was to build something directly on top of kubernetes
+using the provided API, available for a large variety of languages, to create, manage and 
+delete containers when needed. \\
+For what concerns the framework, OpenFaas cam in handy to provide a frontend module 
+useful for PAPS users which will be easily able to upload the functions that PAPS
+will manage and distribute. OpenFaas was the chosen one since it offers both a
+simple UI and the possibility to be managed by a cli. It also offers the possibility to 
+install a statistics collection module which will be really useful to monitor how the
+system is working in a real environment.
+
+\subsubsection*{Kubernetes integration}
