@@ -2,24 +2,34 @@ The scope of this project is to develop the first of the four PAPS phases: the n
 partitioning. This part of the framework has the role of dividing the network into 
 delay aware communities in order to reduce the number of nodes on which the next phases
 will need to work. The first pice needed to partition the network is the network itself,
-this will be provided as an input in the form on a delay matrix from a node to any other
-node and the number of nodes forming the network. \\ 
+it will be provided as an input in the form of a delay matrix, from a node to any other
+node, and the number of nodes which are part of that network. \\ 
 Once the input is parsed and data are acquired, the program checks if the nodes specified 
-in the matrix are really present in the cluster. To do that the program interrogates 
-the cluster, through a call to the API, to obtain the list of kubernetes objects (V1Node)
-which contains all the node registered in the cluster and checks if the name given in the
-input file corresponds to a real node. If all the matches are positive, each selected 
+in the input are really present in the cluster. To do that the program interrogates 
+kubernetes, through a call to the API, to obtain the list of objects (V1Node) related to
+all the nodes registered in the cluster and checks if the names given in the
+input matches with real cluster nodes. If all the matches are positive, each selected 
 node is wrapped in a SLPA \cite{SLPA} node to allow an effective partition of the network.
-This wrapping adds a to the initial kubernetes structure a memory and a list of nearby 
-nodes. To understand why those structures are added to each node, a brief introduction on
-SLPA is needed, this algorithm is used to divide a network of interconnected elements into
-communities spreading labels in the network to decide to which community each node belongs to.
+This wrapping adds to the initial kubernetes structure a memory and a list of nearby 
+nodes and a label which it will try to spread. To understand why those structures are 
+added, a brief introduction on SLPA is needed, it is composed of a variable number of 
+iterations (stable solutions are obtained with 20) where nodes spread their labels 
+around to their neighbors. In each iteration, all the nodes will become once 
+\textit{listener} and will collect a label, selected from the memory, from any nearby 
+node (\textit{speaker}). Once all the labels are collected, the listener selects the 
+most popular node (or selects a node with any other listening rule) and adds it to its
+memory. When it will become speaker it will select a label from its memory according 
+to a probability distribution based of the number of occurrences of each label in the 
+memory. An iteration will end when all the nodes have been listener once. \\
+After the given number of iterations, the memory of each node will be post-processed, 
+the most popular node in the memory will determine its community. In case of multiple
+labels with the same number of occurrences, the node will be assigned to multiple 
+communities and will be considered an \textit{overlapping node}. Since PAPS doesn't 
+want to deal with those kind of nodes, the overlap will be solved selecting randomly 
+one of the overlapping communities. \\
+With this procedure the network will be effectively divided into communities but, 
+to keep the size even more under control, oversized communities will be split to better
+fit the size limit (also provided as input). \\
+Now that all the nodes are assigned to a community, another API call will modify the
+existing node in order to add a label in order to easily recognize and manage each community.
 
-
---------------------------------------------------------------------
-
-he partitioning is mainly focussed on the division of the network in multiple 
-    communities in order to reduce the scope of the following parts. The division is performed using 
-    the SLPA \cite{SLPA} algorithm, which uses a label spreading technique to assign each node to a
-    community. Once all the nodes are assigned, the Kubernetes node will be modified using the API 
-    labeling it in order to easily recognize and manage each community.
