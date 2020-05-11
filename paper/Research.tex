@@ -2,28 +2,51 @@
 To start the process of developing PAPS, the first thing was to search for any useful tool 
 that could speed up the process of creating what was designed.  
 The starting idea was to use OpenWhisk \cite{OpenWhisk}, a serverless platform able to run 
-functions on top of an infrastructure. The idea was to integrate it on top of a kubernetes 
+functions on top of an infrastructure. The idea was to integrate it on top of a Kubernetes 
 cluster, running a series of docker \cite{Docker} containers. \\
 Searching on the internet information about the integration of those platforms, other two 
 option were available: OpenFaas \cite{Faas} and Kubeless \cite{Kubeless}. For what concerns 
 the functionalities the three frameworks are pretty similar one to another. OpenWhisk and 
-OpenFaas work almost in the same way, both are used in many applications nowadays. 
-Kubeless has a built in synergy with kubernetes, since is written on top of it,  and for 
-that reason could be a good alternative. The main issue with OpenWhisk and Kubeless is 
-that they are written in Scala and Akka, OpenWhisk also has a complex structure and for that reason 
+OpenFaas work almost identical, and both are used in many applications nowadays. 
+Kubeless has a built-in synergy with Kubernetes, since it's written on top of it,  and for 
+that reason it could be a good alternative. The main issue with OpenWhisk and Kubeless is 
+that they are written in Scala and Akka; OpenWhisk also has a complex structure and for that reason 
 is not optimal for a project like this. For what concerns OpenFaas, it is written
 in Go and offers a lot of additional features like a metrics system and the possibility to 
 customize the scheduling policy used by the framework. During the research process one main
-problem came out, all the frameworks have the characteristic to hide to the final user 
-the underlying structure making it hard to integrate PAPS functionalities in it.
-To solve this issue, the best decision was to build something directly on top of kubernetes
+problem came out: all the frameworks have the characteristic to hide to the final user 
+the underlying infrastructure making it hard to integrate PAPS functionalities in it.
+To solve this issue, the best decision was to build something directly on top of Kubernetes
 using the provided API, available for a large variety of languages, to create, manage and 
 delete containers when needed. \\
-For what concerns the framework, OpenFaas cam in handy to provide a frontend module 
+For what concerns the framework, OpenFaas came in handy to provide a frontend module 
 useful for PAPS users which will be easily able to upload the functions that PAPS
-will manage and distribute. OpenFaas was the chosen one since it offers both a
+will manage and distribute. We chose OpenFaas since it offers both a
 simple UI and the possibility to be managed by a cli. It also offers the possibility to 
-install a statistics collection module which will be really useful to monitor how the
+install a statistics collection module which can be really useful to monitor how the
 system is working in a real environment.
 
 \subsubsection*{Kubernetes integration}
+Kubernetes is an orchestration framework that automates deployment, scaling and management of containerized
+applications on a multi-node cluster.
+The containers are bundled in particular entities, the Pods, that contain all the dependency and 
+additional metadata about the deployment. A set of controllers allows the user to automate
+in a flexible way the deployment of these pods.
+\\
+Kubernetes offers to the user REST API, through which all object can be created, read, updated
+and deleted. This object are stored inside the system and describe the desired state of the cluster.
+\\
+All objects have a metadata field, in which labels can be added and removed.
+Labels can be used to mark an object, and their meaning is defined by the programmer that created it.
+Labels allows filtering while asking for resources, and so they can be used to assign a particular role 
+or attribute to a certain object.
+\\
+This feature can be used in PAPS to perform the partition of the network in communities.
+In fact, Kubernetes doesn't hide the structure of the cluster, and allows to obtain information about
+the hosts running through the Node object. Each Node correspond to an actual host that is
+connected to the cluster, and therefore can be managed by Kubernetes. 
+Every Node can be marked with two labels, "COMMUNITY" and "ROLE". The former assigns to the node 
+the PAPS community to which it belongs, while the latter specifies if the host is the leader of the
+community or just a member that executes the leader's allocation plan.
+By filtering on these labels, all the nodes of a community can be retrieved, easing the tasks performed 
+by the Allocation and Partition modules.
