@@ -9,11 +9,12 @@ deployment and placement inside the network.
 In this way, the creation of containers is sped up, because the framework automates all the process
 of creating a container and eliminates the need of adding useless boilerplate code.
 \par
-The first candidate was OpenWhisk \cite{OpenWhisk}, a serverless platform able to run 
+The first candidate was OpenWhisk \footnote{OpenWhisk website: https://openwhisk.apache.org/}, a serverless platform able to run 
 functions on top of an existing infrastructure. The idea was to integrate it on top of a Kubernetes 
-cluster, running a series of docker \cite{Docker} containers. \\
+cluster, running a series of docker \footnote{Docker website: https://www.docker.com/} containers. \\
 Searching on the internet information about the integration of those platforms, other two 
-options were available: OpenFaas \cite{Faas} and Kubeless \cite{Kubeless}. For what concerns 
+options were available: OpenFaas \footnote{OpenFaas website: https://www.openfaas.com/} and 
+Kubeless \footnote{Kubeless website: https://kubeless.io/}. For what concerns 
 the functionalities the three frameworks are pretty similar one to another.
 They all provide a mechanism to deploy functions that can be written in various programming languages.
 These functions accept arguments and give a response in the form of a json file, whose structure
@@ -99,7 +100,7 @@ or attribute to a certain object.
 The infrastructure is managed with the help of some key components, that are divided into two categories:
 Control Plane components and Kubernetes Node components.
 \begin{figure}
-    \includegraphics[width=\linewidth]{images/components-of-kubernetes.png}
+    \includegraphics[width=\linewidth]{Images/components-of-kubernetes.png}
     \caption{Components of Kubernetes.}
     \label{fig:boat1}
   \end{figure}

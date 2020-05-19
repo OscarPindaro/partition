@@ -34,7 +34,8 @@
     This work starts from PAPS \cite{PAPS}, a framework which aims to tackle the complexity of edge 
     infrastructures by means of decentralized self-management and serverless computing. This paper
     shows how the first of the four PAPS phases, \textit{partitioning}, is implemented and integrated
-    with a common open-source system: Kubernetes \cite{Kube}, to easily deploy the system in an already
+    with a common open-source system: Kubernetes \footnote{Kubernetes website: https://kubernetes.io/},
+    to easily deploy the system in an already
     existing network. The partitioning is mainly focussed on the division of the network in multiple 
     communities in order to reduce the scope of the following parts. The division is performed using 
     the SLPA \cite{SLPA} algorithm, which uses a label spreading technique to assign each node to a
@@ -48,18 +49,15 @@
 \end{abstract}
 %------------------------------------------------------------------------------------------------------------------------------------------------
 {{\section{Introduction}\label{sect:intro}}}
- %Introduction
- %introduzione sull'edge computing
- %aggiungere riferimenti allo stato dell'arte
- %FABIO
 \input{Introduction.tex}
+
+
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 {{\section{PAPS}\label{sect:paps}}}
  %Ricontrollare come è scritto, magari aggiungere qualcosa di discorsivo
  %mettere immagini
 \input{paps.tex}
-
 
 
 
@@ -81,11 +79,14 @@
 %FABIO
 \input{generalImpl.tex}
 
+
+
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
 {{\section{Partition Implementation}\label{sect:implementation}}}
 %aggiungere immagini
 \input{Implementation.tex}
+
 
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,9 +97,13 @@
 %OSCAR
 \input{conclusion.tex}
 
+
+
 %------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
 {{\section{References}\label{sect:biblio}}}
 \input{Bibliography.tex}
+
 
 
 

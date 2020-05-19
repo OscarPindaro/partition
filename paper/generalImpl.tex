@@ -1,0 +1,18 @@
+Thanks to the results of the research phase, we decided to use mainly kubernetes functionalities
+and extension possibilities to implement PAPS phases and use OpenFaas as a frontend module to 
+allow an easy deployment of the serverless functions.
+
+The first of the four PAPS phases is the \textit{partition}, in this phase the original 
+network topology on which PAPS will need to work is divided into delay-aware communities in 
+order to reduce the scope of the following parts. To do that the idea is to take as input a 
+delay matrix describing the measured delay between the nodes of the networks and other 
+additional parameters that can be useful to describe the desired behavior of the partitioner.
+This input can be provided as a file input or even through the OpenFaas GUI and will than be
+parsed by the program to fill some data structures. The partition will first of connect to 
+kubernetes API manager and do a call to obtain the list of registered nodes to check if they 
+match with what has been parsed from the input. This operation needs to be done in order to
+avoid the presence of nodes in the topology that are not actually managed by kubernetes and 
+so that can't be modified and labeled according to the specific needs. 
+
+To divide the network the partition will use SLPA, an algorithm which uses label spreading 
+techniques to define some  
