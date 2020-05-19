@@ -1,6 +1,7 @@
 \documentclass{article} %document style and layout
 \usepackage[table, dvipsnames]{xcolor} %colors for tables and text
-\usepackage{graphicx} %
+\usepackage{graphicx} %to insert images
+\graphicspath{ {./Images/} }
 \usepackage{tabu} %creation of tables
 \usepackage{array}
 \usepackage{enumitem} %list of elements
@@ -9,6 +10,7 @@
 \usepackage{subfig} 
 \setcounter{lofdepth}{2} %subfig used to have more than 1 figure together, \setcounter used to add subfigures in the list of figures
 \usepackage{float}
+
 
 
 %-------Titlepage information------------------------------------------
@@ -53,7 +55,6 @@
 \input{Introduction.tex}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
-\clearpage
 {{\section{PAPS}\label{sect:paps}}}
  %Ricontrollare come è scritto, magari aggiungere qualcosa di discorsivo
  %mettere immagini
@@ -63,7 +64,6 @@
 
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
-\clearpage
 {{\section{Research}\label{sect:research}}}
 %introzioncina su cosa sono sti framework
 %framwrok serveless vanno bene così.
