@@ -98,7 +98,13 @@ or attribute to a certain object.
 \par
 The infrastructure is managed with the help of some key components, that are divided into two categories:
 Control Plane components and Kubernetes Node components.
-\\
+\begin{figure}
+    \includegraphics[width=\linewidth]{images/components-of-kubernetes.png}
+    \caption{Components of Kubernetes.}
+    \label{fig:boat1}
+  \end{figure}
+
+
 The \textbf{Control Plane components} has the role of managing the cluster, by making global decisions.
 It detects and responds to cluster events. These components can be run on any machine, but usually
 they are placed on a node called Master.

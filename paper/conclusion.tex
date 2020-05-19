@@ -1,0 +1,29 @@
+Our work focused mostly on finding the best frameworks that would support PAPS functionalities.
+These serverless computing frameworks turned out to be excellent tools for the production
+and deployment of stateless functions, but they also had evident limits in managing the underlying
+infrastructure.
+Since we needed a much lower level of abstraction, we decided to use also Kubernetes and extend
+its functionalities, taking advantage of its modular architecture.
+We implemented the Partition module on Kubernetes, and we think that the remaining modules will
+be placed here as well. In this way, OpenFaas has the role of a frontend module, that allows
+the user to upload its function in the cluster without having to care about the infrastructure.
+We chose OpenFaas for its excellent support and simplicity, but it can be substituted with other frameworks
+with very little effort, since PAPS works at the Kubernetes level.
+PAPS is mostly focused on a workload that come from outside the MEC network, and so the trigger functionality,
+that links the execution of multiple functions, was very marginal.
+If a future work will focus on a micro-services architecture, OpenWhisk may be
+a better option, since it offers a cleaner and more powerful structure for this mechanism.
+\par
+For what concerns the implementation of the Partition module, we decided to write ourselves 
+the SLPA algorithm, and we used a round robin approach to break down too large communities.
+This part of the component could be substituted by using the GANXiS \cite{GANXis} software, a program
+that runs the same algorithm and has more complex and effective techniques to reduce
+the size of the communities inside the given boundaries.
+The next step in the development of PAPS will have to be the implementation of the Allocation 
+and Placement components. Their functioning is completely decoupled from the Partition module,
+since they just need to know the structure of the communities, and any change in its logic
+will have no effect on how the container will be disposed inside the cluster.
+Kubernetes offers very powerful tools that allows to schedule and place pods on the nodes of the cluster,
+while taking care that every container is healty and running. Thanks to this functionality,
+the Allocation and Placement will just have to produce an allocation plan without having to
+care how to enforce it.
