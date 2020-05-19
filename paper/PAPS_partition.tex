@@ -10,6 +10,7 @@
 \setcounter{lofdepth}{2} %subfig used to have more than 1 figure together, \setcounter used to add subfigures in the list of figures
 \usepackage{float}
 
+
 %-------Titlepage information------------------------------------------
 \title{\textbf{\huge{PAPS: A first step into the implementation phase. Partitioning a network.}}}
 \author{\color{black}Fabio Losavio, Oscar Francesco Pindaro \\ \\
@@ -45,18 +46,55 @@
 \end{abstract}
 %------------------------------------------------------------------------------------------------------------------------------------------------
 {{\section{Introduction}\label{sect:intro}}}
+ %Introduction
+ %introduzione sull'edge computing
+ %aggiungere riferimenti allo stato dell'arte
+ %FABIO
 \input{Introduction.tex}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+{{\section{PAPS}\label{sect:paps}}}
+ %Ricontrollare come è scritto, magari aggiungere qualcosa di discorsivo
+ %mettere immagini
+\input{paps.tex}
+
+
 
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 \clearpage
 {{\section{Research}\label{sect:research}}}
+%introzioncina su cosa sono sti framework
+%framwrok serveless vanno bene così.
+%ampliare funzionamento di kubernetes e magari spostare come 
+%implementiamo noi le labels in implementazione 
+%OSCAR
 \input{Research.tex}
 
 
+
 %------------------------------------------------------------------------------------------------------------------------------------------------
-{{\section{Implementation}\label{sect:implementation}}}
+\clearpage
+{{\section{General Implementation Idea}\label{sect:generalImpl}}}
+%come vorremmo fare noi Partition, Allocation e Placement
+%FABIO
+\input{generalImpl.tex}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+{{\section{Partition Implementation}\label{sect:implementation}}}
+%aggiungere immagini
 \input{Implementation.tex}
+
+
+%------------------------------------------------------------------------------------------------------------------------------------------------
+\clearpage
+{{\section{Conclusion}\label{sect:conclusion}}}
+%limiti attuale lavoro
+%direzione in cui andare
+%OSCAR
+\input{conclusion.tex}
 
 %------------------------------------------------------------------------------------------------------------------------------------------------
 {{\section{References}\label{sect:biblio}}}

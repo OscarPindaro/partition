@@ -1,0 +1,27 @@
+##introduzione
+intorduzione generale sull'edge computing
+aggiungere riferimenti allo stato dell'arte
+
+##paps
+qualcosa di discorsivo su come funziona paps
+di che componenti è fatto.
+mettere le loro immagini
+
+##ricerca framework
+quello che abbiamo scritto sembra bastare
+al massimo ampliare kubernetes
+
+##come abbiamo affrontato il problema
+Partition
+Allocation
+Placement
+
+##implentazione
+lascierei invariata
+aggiungere degli schemi / immagini
+
+##conclusione
+limiti attuale lavoro
+direzione in cui andare
+
+
