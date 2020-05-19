@@ -1,30 +1,56 @@
 \subsubsection*{Framework research}
-To start the process of developing PAPS, the first thing was to search for any useful tool 
-that could speed up the process of creating what was designed.  
-The starting idea was to use OpenWhisk \cite{OpenWhisk}, a serverless platform able to run 
-functions on top of an infrastructure. The idea was to integrate it on top of a Kubernetes 
+% Il problema di questi framework è che comunque nascono l'infrastruttura sottostante e la
+% gestiscono loro sotto, dando un accesso solo tramite API in maniera limitata.
+
+
+Since PAPS focuses on serverless function, initially the research looked for a framework 
+that would allow the user to create in a immediate way functions and would give the opportunity to manage their
+deployment and placement inside the network.
+In this way, the creation of containers is sped up, because the framework automates all the process
+of creating a container and eliminates the need of adding useless boilerplate code.
+\par
+The first candidate was OpenWhisk \cite{OpenWhisk}, a serverless platform able to run 
+functions on top of an existing infrastructure. The idea was to integrate it on top of a Kubernetes 
 cluster, running a series of docker \cite{Docker} containers. \\
 Searching on the internet information about the integration of those platforms, other two 
 option were available: OpenFaas \cite{Faas} and Kubeless \cite{Kubeless}. For what concerns 
-the functionalities the three frameworks are pretty similar one to another. OpenWhisk and 
-OpenFaas work almost identically, and both are used in many applications nowadays. 
-Kubeless has a built-in synergy with Kubernetes, since it's written on top of it,  and for 
-that reason it could be a good alternative. The main issue with OpenWhisk and Kubeless is 
+the functionalities the three frameworks are pretty similar one to another.
+They all provide a mechanism to deploy functions that can be written in various programming languages.
+These functions accept arguments and give a response in the form of a json file, whose structure
+is determined by the programmer. In this way the mechanisms that deploy and call the functions are language agnostics.
+\par
+Function calls are controlled with Triggers, components that reacts to certain events inside the 
+ecosystem (such as HTTP request or the call of another function).
+OpenWhisk offers a very detailed protocol on how to design triggers, functions, and rules
+that connect these two elements.
+On the other hand, OpenFaas is less focused on this functionality and more oriented on HTTP calls.
+\par
+Kubeless stands out since it has a built-in synergy with Kubernetes. In order to support the creation of functions, 
+it extends the Kubernetes API by creating a CustomResourceDefinition, a RESTful resource that is saved inside the Kubernetes
+system. This new type of resource can be accessed like any other normal object inside Kubernetes
+by making REST calls (via CLI or HTTP request).
+
+\par
+The main issue with OpenWhisk and Kubeless is 
 that they are written in Scala and Akka; OpenWhisk also has a complex structure and for that reason 
 is not optimal for a project like this. For what concerns OpenFaas, it is written
-in Go and offers a lot of additional features like a metrics system and the possibility to 
-customize the scheduling policy used by the framework. During the research process one main
-problem came out: all the frameworks have the characteristic to hide to the final user 
-the underlying infrastructure making it hard to integrate PAPS functionalities in it.
+in Go and offers some additional features like a metrics system and the possibility to 
+customize the scheduling policy used by the framework.
+\\
+During the research process one main  problem came out: all the frameworks hide to the final user 
+the underlying infrastructure, making the integration of PAPS functionalities hard.
 To solve this issue, the best decision was to build something directly on top of Kubernetes
 using the provided API, available for a large variety of languages, to create, manage and 
 delete containers when needed. \\
 For what concerns the framework, OpenFaas came in handy to provide a frontend module 
 useful for PAPS users which will be easily able to upload the functions that PAPS
 will manage and distribute. We chose OpenFaas since it offers both a
-simple UI and the possibility to be managed by a cli. It also offers the possibility to 
-install a statistics collection module which can be really useful to monitor how the
+simple UI and the possibility to be managed by a CLI. It was also the only one that offered the possibility to 
+install a statistics collection module, which can be used to monitor how the
 system is working in a real environment.
+
+
+\subsubsection*{OpenFaas}
 
 \subsubsection*{Kubernetes integration}
 Kubernetes is an orchestration framework that automates deployment, scaling and management of containerized
