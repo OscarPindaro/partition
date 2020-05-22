@@ -145,15 +145,3 @@ The \textbf{kube-proxy} allows nodes to communicate with the api server. It main
 allowing pods to communicate with one another.
 \\
 The \textbf{Container Runtime} is the software responsible for running containers.
-\newline
-\newline
-\textbf{STA PARTE MI SA CHE E' DA SPOSTARE}
-\textit{This feature can be used in PAPS to perform the partition of the network in communities.
-In fact, Kubernetes doesn't hide the structure of the cluster, and allows to obtain information about
-the hosts running through the Node object. Each Node correspond to an actual host that is
-connected to the cluster, and therefore can be managed by Kubernetes. 
-Every Node can be marked with two labels, "COMMUNITY" and "ROLE". The former assigns to the node 
-the PAPS community to which it belongs, while the latter specifies if the host is the leader of the
-community or just a member that executes the leader's allocation plan.
-By filtering on these labels, all the nodes of a community can be retrieved, easing the tasks performed 
-by the Allocation and Partition modules.}

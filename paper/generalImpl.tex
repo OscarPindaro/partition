@@ -13,7 +13,7 @@ order to reduce the scope of the following parts. To do that the idea is to take
 delay matrix describing the measured delay between the nodes of the networks and other 
 additional parameters that can be useful to describe the desired behavior of the partitioner.
 This input can be provided as a file input or even through the OpenFaas GUI and will than be
-parsed by the program to fill some data structures. The partition will first of connect to 
+parsed by the program to fill some data structures. The partition will first of all connect to 
 kubernetes API manager and do a call to obtain the list of registered nodes to check if they 
 match with what has been parsed from the input. This operation needs to be done in order to
 avoid the presence of nodes in the topology that are not actually managed by kubernetes and 
@@ -41,9 +41,16 @@ be easily changed by changing few lines in the SLPA code.
     \label{fig:communities}
 \end{figure}
 
-As an additional division tool the Partition keep the size of the communities under control
+As an additional division tool the Partition keeps the size of the communities under control
 applying Round Robin to oversized communities to split them in smaller ones and have all 
 communities under a given threshold size.\\
+The Kubernetes label feature can be used to perform the partition of the network.
+Every Node can be marked with two labels, "COMMUNITY" and "ROLE". The former assigns to the node 
+the PAPS community to which it belongs, while the latter specifies if the host is the leader of the
+community or just a member that executes the leader's allocation plan.
+By filtering on these labels, all the nodes of a community can be retrieved, easing the tasks performed 
+by the Allocation and Partition modules.
+\\
 
 Once the network is split in communities, in each one the \textbf{allocation} phase will take
 place. There the community leader will compute the resource allocation to assign to each node
@@ -64,7 +71,7 @@ slightly change. To do that a pod for the allocation will be always deployed in 
 and it will contain a function which works only on local resources.\\
 
 The allocation phase will work in combination with the \textbf{placement} phase using a
-\textit{kube-scheduler} module to actually deploy the pods necessary to meet realize the 
+\textit{kube-scheduler} module to actually deploy the pods necessary to realize the 
 computed model. The kube-scheduled will be a custom module running in the network and will
 contain some rules on how to deploy pods according to the MIP result. To correctly schedule 
 pods, the filtering rules of the scheduler will be modified to filter by community and for 
