@@ -1,9 +1,9 @@
 Edge computing \cite{Edge} is an open platform that integrates network, computing, storage, and application core
-capabilities on the edge of the network that is physically close to the data source. It provides
+capabilities on the edge of the network that is physically close to the data source \cite{Edge2}. It provides
 a computing model for edge intelligence services. The location where the edge calculation occurs is 
 called the edge node, which can be any node between the data generation source and the cloud center
 that has computing resources and network resources. The amount of devices connected to the 
-internet, and as a consequence the amount of data shared, is constantly growing and this introduced 
+internet, and as a consequence the amount of data shared, is constantly \cite{DataGrowth} growing and this introduced 
 a number of different problems that have to be addressed. 
 \\
 \begin{enumerate}
@@ -17,7 +17,7 @@ a number of different problems that have to be addressed.
 
     \item As more and more user applications run on cloud servers, the demand for energy consumption
             in large-scale data centers will be difficult to meet in the future. The existing research on
-            energy consumption in cloud computing centers focuses on how to improve energy efficiency.
+            energy consumption in cloud computing centers focuses on how to improve energy efficiency \cite{EnEff}.
             However,improving energy efficiency alone will not solve the enormous energy consumption 
             problem of the data center, which will be more prominent in the environment of all things.
 \end{enumerate}
@@ -30,17 +30,17 @@ performed by the original cloud computing model to the network edge device, redu
 of the cloud server, slowing down the pressure of the network bandwidth, and improving the processing 
 efficiency of data in the era of Internet of Everything. Edge computing is not to replace the cloud, 
 but to complement the cloud, providing a better computing platform for related technologies such as mobile
-computing and the Internet of Things.
+computing and the Internet of Things \cite{IoT}.
 
 Existing research generally divides the architecture of edge computing from the central network to the 
 edge of the network into three layers: the cloud computing layer, the edge computing layer, and the ending
-layer, as shown in Figure \ref{fig:edge_infr}. Different layers are generally divided according to their computing 
+layer, as shown in Figure \ref{fig:edge_infr} \cite{Edge3,Edge4,Edge5}. Different layers are generally divided according to their computing 
 and storage capabilities. The computing and storage capabilities of the ending layer, the edge computing
 layer, and the cloud computing layer are sequentially increased. In order to achieve intra-layer and
 cross-layer communication, each communication technology can be connected by various communication 
 technologies, including wired communication (such as Ethernet, optical fiber), wireless communication 
-(such as Bluetooth, LTE, ZigBee, NFC, IEEE802.11a/b). /c/g/c, satellite link) or a combination of two 
-technologies. Edge computing extends cloud services to the edge of the network by introducing an edge 
+(such as Bluetooth, LTE, ZigBee, NFC, IEEE802.11a/b). /c/g/c, satellite link or a combination of two 
+technologies \cite{Communication}. Edge computing extends cloud services to the edge of the network by introducing an edge 
 layer between the terminal device and the cloud.
 
 \begin{figure}
@@ -48,3 +48,26 @@ layer between the terminal device and the cloud.
     \caption{Edge computing infrastructure.}
     \label{fig:edge_infr}
 \end{figure}
+
+% come fitta PAPS in questo
+Since some applications can not deal with the high latency from devices to cloud data centers, this approach 
+can be useful to respect SLA requirements. 
+At the same time, serverless computing is a new cloud computing paradigm that is becoming more
+and more popular, since it allows the developer to focus on the development of an application
+while ignoring the infrastructure on which the function will be deployed. In this context, 
+PAPS (Partitioning, Allocation, Placement and Scaling), a framework that tries to tackle the challenges related to the management of edge computing infrastructures, 
+is trying to automate the allocation of serverless function and the management of large scale edge topologies.
+It should be able to give an optimal allocation for a given workload, but also
+to react to unpredictable workload fluctuations that characterize this type of networks.
+
+% nostra implementazione
+In this paper we will present our implementation of PAPS giving a general idea of how all its phases can be 
+implemented and creating a functioning prototype of the partition phase. 
+
+% struttura PAPS
+The rest of the paper is organized as follows. Section \ref{sect:paps} presents the theoretical structure of the 
+framework which was the starting point of our work. Section \ref{sect:research} describes how frameworks and tools
+used in the actual implementation have been chosen among all the possible choices. Sections \ref{sect:generalImpl}
+and \ref{sect:implementation} go more in detail about the general implementation idea for the overall framework and
+more in details how a prototype for the partition phase has been created. Section \ref{sect:conclusion} concludes 
+the paper.
