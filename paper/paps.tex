@@ -62,12 +62,12 @@ It is composed of a variable number of iterations (stable solutions are obtained
 around to their neighbors.
 The main component of this  algorithm is the memory inside each SLPA node, in which it will store all the labels received.
 \\
-In each iteration, all the nodes will become once 
+In each iteration, all the nodes will become one at a time 
 \textit{listener} and will collect a label, selected from the memory, from any nearby 
 node (\textit{speaker}). Once all the labels are collected, the listener selects the 
 most popular node (or selects a node with any other listening rule) and adds it to its
 memory.
-An iteration will end when all the nodes have been listener once. \\
+An iteration ends when all the nodes have been listener once. \\
 Since the initial idea of this 
 algorithm was developed to divide social networks profiles in communities, it can create 
 overlapping node which will belong to more than one community. 
