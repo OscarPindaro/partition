@@ -9,21 +9,20 @@ in the input are really present in the cluster. To do that the program interroga
 Kubernetes, through a call to the API, to obtain the list of objects (V1Node) related to
 all the nodes registered in the cluster and checks if the names given in the
 input matches with real cluster nodes. If all the matches are positive, each selected 
-node is wrapped in a SLPA \cite{SLPA} node to allow an effective partition of the network.
+node is wrapped in a SLPA node to allow an effective partition of the network.
 This wrapping adds to the initial Kubernetes structure a memory and a list of nearby 
-nodes and a label which it will try to spread.
-%--------------- inizio descrizione SLPA -----------------------
-To understand why those structures are 
-added, a brief introduction on SLPA is needed. It is composed of a variable number of 
-iterations (stable solutions are obtained with 20) where nodes spread their labels 
-around to their neighbors. In each iteration, all the nodes will become once 
-\textit{listener} and will collect a label, selected from the memory, from any nearby 
-node (\textit{speaker}). Once all the labels are collected, the listener selects the 
-most popular node (or selects a node with any other listening rule) and adds it to its
-memory. When it will become speaker it will select a label from its memory according 
-to a probability distribution based of the number of occurrences of each label in the 
-memory. An iteration will end when all the nodes have been listener once. \\
-%----- fine circa
+nodes and a label which it will try to spread.\\
+To run SLPA, the program takes as inputs, the number of iterations, a probability threshold 
+and a maximum size for the communities. To improve the randomness of the label spreading, 
+both the list of the listeners and the list of the speakers are shuffled at each iteration.
+For each listener in the topology, its neighbors will become the speakers and from them it
+will obtain a list of labels and the most received one will be added to the memory 
+(\textit{listening rule}). Every time the memory is updated, the node will select the 
+label that he will spread according to the \textit{speaking rule}. In our implementation
+the speaking rule uses a \textit{ranking selection} algorithm which randomly picks a node
+according to a probability distribution based on the occurrences of each label
+in the memory. If a node is present many times in the memory it will be select with an 
+higher probability. \\
 After the given number of iterations, the memory of each node will be post-processed, 
 the most popular node in the memory will determine its community. In case of multiple
 labels with the same number of occurrences, the node will be assigned to multiple 
