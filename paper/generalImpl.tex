@@ -18,18 +18,15 @@ kubernetes API manager and do a call to obtain the list of registered nodes to c
 match with what has been parsed from the input. This operation needs to be done in order to
 avoid the presence of nodes in the topology that are not actually managed by kubernetes and 
 so that can't be modified and labeled according to the specific needs. 
-%------------------------ descrizione slpa da spostare
-To divide the network the partition will use SLPA, an algorithm which uses label spreading 
-techniques to decide to which community each node will belong. The main component of this 
-algorithm is the memory inside each node, there it will store all the labels received and 
-it will process them in each round to decide the label to spread and at the end of the 
-process the final label which will identify the community. Since the initial idea of this 
-algorithm was developed to divide social networks profiles in communities, it can create 
-overlapping node which will belong to more than one community. 
-%-------------------------- 
-For our implementation this
-is a problem but can be easily solved in many ways. Since all the labels kept at the end 
-of the process are valid ones the simplest idea is to just randomly choose one of them or,
+After this check, the program can start dividing the network into delay aware communities,
+using SLPA, according to some additional parameters also provided as input. With this 
+algorithm there is the possibility to obtain an \textit{overlapping node}, a node belonging 
+to more than one community. In the original PAPS idea this is handled by dividing the resources
+that has to be assigned to that node among the overlapping communities, but, for the sake of 
+simplicity, in our implementation this is solved by assigning that node to only one of the 
+overlapping communities. Since all the labels kept at the end of the process are valid ones,
+there are several ways to assign that node to one of its communities.
+The simplest idea is to just randomly choose one of them or,
 with some more processing, is also possible to pick the most popular one among all the 
 remaining labels. In our implementation we select the first one in the list, which is 
 equal to picking a random one since all the nodes are shuffled at each round, but it can 
