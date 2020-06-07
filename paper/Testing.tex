@@ -1,12 +1,10 @@
 Since our code has been shipped inside a container, we needed to test if the prototype
 was able to communicate with the chosen frameworks. In fact, the partition module  needs to invoke the Kubernetes API
-in order to assign the community and role labels.
-\\
+in order to assign the community and role labels.\\
 We deployed our container on Minikube. Minikube is a virtual machine running in VirtualBox, in which a
 one-node Kubernetes cluester has already been deployed. The deployment of the container 
 was done by using the OpenFaas CLI, and its functionalities were tested by using both the invocation
-through the \textit{faas-cli} and the \textit{faas-gui}.
-\\
+through the \textit{faas-cli} and the \textit{faas-gui}.\\
 The SLPA algorithm was tested locally by creating a mock delay matrix. This matrix should be symmetric and, 
 in order to have significant results, it should reflect the structure of a real network. In fact, drawing the network
 delays from a uniform distribution produces a single community in which all nodes have been put but doesn't correspond
