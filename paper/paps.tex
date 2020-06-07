@@ -107,3 +107,10 @@ run in parallel and independently.
 Each controller accepts as input the number of container allocated for its function and the 
 measured arrival rate, and outputs the response time. The objective is to keep the response time
 at the control set point, which must be lower than the SLA.
+\\
+\\
+Currently PAPS is a prototype that works on a simulated network in PeerSim \footnote{http://peersim.sourceforge.net/},
+in which the serverless functions are implemented as java threads. The prototype runs on a single machine and simulates
+the workload by drawing from a set of probability distributions.
+The goal of our project is to integrate PAPS with real world frameworks, in order to test and have a better
+idea about the feasibility of this project on a real multi-node environment.
