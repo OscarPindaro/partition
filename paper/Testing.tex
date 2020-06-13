@@ -1,3 +1,78 @@
+Our prototype has been written in Java and makes use of the REST API of Kubernetes. 
+This component was initially a Java executable that operated outside a Kubernetes cluster,
+but at the end it has been shipped inside a container using the building functionality of OpenFaas.
+The testing will check two main characteristics: functional requirements and performance.  
+\\
+\subsubsection*{Functional Requirements}
+\paragraph{}
+First of all we needed to check if the Kubernetes API was reachable from our code.
+The first executable was configured to access a cluster from outside. This was done by loading
+the administrator configuration file in the API.
+The limit of this method was that the component had to be launched on the administrator machine with a JVM
+and that it had full control of the cluster. 
+\\
+These problems were solved by building a container with our executable by using OpenFaas and deploying it
+in the cluster.
+\\
+In Kubernetes permissions are granted to pods by creating new Roles. These are objects that tell which API 
+calls can be made by an agent inside the cluster, and can specify which objects can be affected by these calls.
+\\
+Since a running pod does not have access to the old configuration file (because it's not deployed on the administrator machine),
+it didn't have the permission to read and updated nodes' labels, and so we had to link it to a Role.
+After doing this procedure, the behavior of the component inside and outside the cluster is identical,
+since it does not affect the SLPA code.
+\paragraph{}
+For what concerns SLPA, the algorithm in the container runs only if the nodes that
+are given as input are registered inside the Kubernetes cluster.
+Since we didn't have a multi-node cluster \textbf{(sono un po' indeciso, magari lo golgo)}
+, the SLPA algorithm was unit tested locally outside the container.
+We created a dummy network by filling the delay matrix and giving it to the algorithm.
+The delay matrix is a  $NxN$ matrix, where N is the number of nodes of the network.
+The cell M[$i$,$j$] contains the delay between the node i and j. If this
+cell is set to -1, there is no arc the links the two nodes. 
+Note that in a real world scenario this delay would be measured for example pinging the target node.
+\\
+
+
+
+
+
+
+\subsubsection*{Perfomance}
+
+
+
+
+Parte di testing divisa in funzionale e non funzionale
+
+FUNZIONALE
+1) testing dell'integrazione con kubernetes.
+    si può fare dentro o fuori, cambiano i permessi.
+    una volta settati, 'algoritmo può essere chiamato in remoto senza alcun cambiamento nel comportamento
+    Unit test sulle singole chiamate dentro e fuori il cluster?
+
+2) testing sulle reti prodotte da SLPA con esempi (disegnati con draw-io)
+    delay matrix: se un link tra il nodo i e j esiste, la cella i j+ un numero positivo che contiene il delay tra i
+    due. Se un link non è presente, la cella è settata a -1 
+    direi quella da 10 nodi che abbiamo fatto. Poi facciamo la stessa rete ma con una size delle 
+    community più piccola per vedere come triggera il round robin (magari in diverse iterazioni)
+
+NON FUNZIONALE:
+1) testare l'algoritmo su openFaas non ha senso, è in localhost e non da nessun insight
+
+2) testing del nostro SLPA con una rete generata casualmente, tagliamo i nodi e vediamo  con diverse size
+    e con diverse delay threshold come cambiano le performance
+    considerazioni su presenza di round robin e altro.
+
+
+
+
+
+
+
+
+
+
 Since our code has been shipped inside a container, we needed to test if the prototype
 was able to communicate with the chosen frameworks. In fact, the partition module  needs to invoke the Kubernetes API
 in order to assign the community and role labels.\\
