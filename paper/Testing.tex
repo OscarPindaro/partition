@@ -23,15 +23,48 @@ After doing this procedure, the behavior of the component inside and outside the
 since it does not affect the SLPA code.
 \paragraph{}
 For what concerns SLPA, the algorithm in the container runs only if the nodes that
-are given as input are registered inside the Kubernetes cluster.
-Since we didn't have a multi-node cluster \textbf{(sono un po' indeciso, magari lo golgo)}
-, the SLPA algorithm was unit tested locally outside the container.
-We created a dummy network by filling the delay matrix and giving it to the algorithm.
+are given as input are registered inside the Kubernetes cluster. Since this check does not have
+any effect on the execution of the algorithm and requires the presence of real hosts in a network,
+we decided to unit-test the algorithm locally outside the container.
+We created a dummy network \ref{fig:RR2} by filling the delay matrix and giving it to the algorithm.
 The delay matrix is a  $NxN$ matrix, where N is the number of nodes of the network.
 The cell M[$i$,$j$] contains the delay between the node $i$ and $j$. If this
-cell is set to -1, there is no arc the links the two nodes. 
+cell is set to -1, there is no arc that links the two nodes. A delay threshold given as input will set to -1
+all the cells that have a delay greater than that. In this example, the network shown is the one obtained after 
+deleting all of these arcs that have a too high delay. The delays are not shown in the figure in order
+to keep the visualization simple and because SLPA does not consider the value of the arcs but only their presence.
 Note that in a real world scenario this delay would be measured for example by pinging the target node.
+\par
+Figure \ref{fig:netNoRR} shows the result of the algorithm without Round Robin. In this output the size of the 
+different communities varies a lot. Since SLPA makes some decision based on chance, reapplying the
+algorithm on the same network will give different results, creating each time different communities.
+Figure \ref{fig:RR1} and \ref{fig:RR2} shows the effects of the Round Robin on the communities that were exceeding 
+in size. In this examples, the maximum size of a community was set to 5. In figure \ref{fig:RR1} SLPA returned
+two communities, one that included all the nodes from 1 to 8 while the other one included the remaining ones.
+These were broken down  by the RR, creating 4 communities that cannot be broken down in 4 different partitions.
+Figure \ref{fig:RR2} shows a luckier iteration of SLPA, that returned only one oversized community (from node 9
+to node 15). 
+\\
+The fact that some nodes are not directly connected to the others of the same community is not a problem,
+since sometimes also SLPA outputs communities with a structure similar to the one returned by the Round Robin in these examples.
+However, if SLPA returns a very large community, with size larger than the maximum size allowed, a set of communities
+with disconnected nodes could be created, since there is no logic that tries to group closer nodes.
+This result would be not optimal, since for sure exists another configuration that can have lower
+overall delay between the nodes of a community.
 
+
+\begin{figure}[]
+    \centering
+    \subfloat[Dummy Netowrk]{\includegraphics[width=.45\linewidth]{Images/rete.png}
+    \label{fig:network}}
+    \subfloat[SLPA without RR]{\includegraphics[width=.45\linewidth]{SLPAnoLimit.png}
+    \label{fig:netNoRR}}
+    \\
+    \subfloat[SLPA with RR]{\includegraphics[width=.45\linewidth]{SLPARR5.png}
+    \label{fig:RR1}}
+    \subfloat[SLPA with RR]{\includegraphics[width=.45\linewidth]{SLPARR5good.png}
+    \label{fig:RR2}}
+\end{figure}
 
 
 
@@ -40,6 +73,20 @@ Note that in a real world scenario this delay would be measured for example by p
 
 \subsubsection*{Perfomance}
 
+
+
+
+\begin{figure}[]
+    \includegraphics[width=\textwidth]{node.png}
+    \label{fig:plotCommunity}
+    \caption{PAPS general structure}
+\end{figure}
+
+\begin{figure}[]
+    \includegraphics[width=\textwidth]{communitySize.png}
+    \label{fig:plotSize}
+    \caption{PAPS general structure}
+\end{figure}
 
 
 
