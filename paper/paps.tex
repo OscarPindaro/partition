@@ -15,14 +15,14 @@ It should be able to give an optimal allocation for a given workload, but also
 to react to unpredictable workload fluctuations that characterize this type of networks.
 %----------------------------- SONO INDECISO SE TENERE STA PARTE ------------------------
 \\
-This is done by dividing this problem into four sub-problems, Partition, Allocation, Planning and Scaling.
+This is done by dividing this problem into four sub-problems, Partition, Allocation, Placement and Scaling.
 \\
 The Partition module divides the topology in sub-networks to reduce the complexity.
 The Allocation module works at two different levels, community and node. At the node level new containers
 are allocated in order to deal with sudden changes in the workload, while at the community level
 its considered the aggregated demand of the whole community.
 \\
-The Planning module handles the placement of containers on the nodes of the topology using
+The Placement module handles the placement of containers on the nodes of the topology using
 the information calculated by the Allocation on the nodes of the topology.
 The Allocation module is supported by the Scaling module, that performs both horizontal and vertical scaling.
 %--------------------------------FINE INDECISIONE --------------------------------------------
