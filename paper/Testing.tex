@@ -15,10 +15,10 @@ These problems were solved by building a container with our executable by using 
 in the cluster.
 \\
 In Kubernetes permissions are granted to pods by creating new Roles. These are objects that tell which API 
-calls can be made by an agent inside the cluster, and can specify which objects can be affected by these calls.
+calls can be made by an agent inside the cluster, and can specify which objects can be affected by a call.
 \\
 Since a running pod does not have access to the old configuration file (because it's not deployed on the administrator machine),
-it didn't have the permission to read and updated nodes' labels, and so we had to link it to a Role.
+it doesn't have the permission to read and updated nodes' labels, and so we had to link it to a Role.
 After doing this procedure, the behavior of the component inside and outside the cluster is identical,
 since it does not affect the SLPA code.
 \paragraph{}
@@ -26,7 +26,7 @@ For what concerns SLPA, the algorithm in the container runs only if the nodes th
 are given as input are registered inside the Kubernetes cluster. Since this check does not have
 any effect on the execution of the algorithm and requires the presence of real hosts in a network,
 we decided to unit-test the algorithm locally outside the container.
-We created a dummy network \ref{fig:RR2} by filling the delay matrix and giving it to the algorithm.
+We created a dummy network (\ref{fig:RR2}) by filling the delay matrix and giving it to the algorithm.
 The delay matrix is a  $NxN$ matrix, where N is the number of nodes of the network.
 The cell M[$i$,$j$] contains the delay between the node $i$ and $j$. If this
 cell is set to -1, there is no arc that links the two nodes. A delay threshold given as input will set to -1
@@ -47,7 +47,7 @@ to node 15).
 \\
 The fact that some nodes are not directly connected to the others of the same community is not a problem,
 since sometimes also SLPA outputs communities with a structure similar to the one returned by the Round Robin in these examples.
-However, if SLPA returns a very large community, with size larger than the maximum size allowed, a set of communities
+However, if SLPA returns a very large community, with size much larger than the maximum size allowed, a set of communities
 with disconnected nodes could be created, since there is no logic that tries to group closer nodes.
 This result would be not optimal, since for sure exists another configuration that can have lower
 overall delay between the nodes of a community.
@@ -67,14 +67,7 @@ overall delay between the nodes of a community.
     \caption{Example Networks}
 \end{figure}
 
-
-
-
-
-
 \subsubsection*{Perfomance}
-
-
 \begin{figure}[]
     \hspace*{-15pt}
     \centering
@@ -85,48 +78,28 @@ overall delay between the nodes of a community.
     \caption{Performance graphs}
 \end{figure}
 
-
-Parte di testing divisa in funzionale e non funzionale
-
-FUNZIONALE
-1) testing dell'integrazione con kubernetes.
-    si può fare dentro o fuori, cambiano i permessi.
-    una volta settati, 'algoritmo può essere chiamato in remoto senza alcun cambiamento nel comportamento
-    Unit test sulle singole chiamate dentro e fuori il cluster?
-
-2) testing sulle reti prodotte da SLPA con esempi (disegnati con draw-io)
-    delay matrix: se un link tra il nodo i e j esiste, la cella i j+ un numero positivo che contiene il delay tra i
-    due. Se un link non è presente, la cella è settata a -1 
-    direi quella da 10 nodi che abbiamo fatto. Poi facciamo la stessa rete ma con una size delle 
-    community più piccola per vedere come triggera il round robin (magari in diverse iterazioni)
-
-NON FUNZIONALE:
-1) testare l'algoritmo su openFaas non ha senso, è in localhost e non da nessun insight
-
-2) testing del nostro SLPA con una rete generata casualmente, tagliamo i nodi e vediamo  con diverse size
-    e con diverse delay threshold come cambiano le performance
-    considerazioni su presenza di round robin e altro.
-
-
-
-
-
-
-
-
-
-
-Since our code has been shipped inside a container, we needed to test if the prototype
-was able to communicate with the chosen frameworks. In fact, the partition module  needs to invoke the Kubernetes API
-in order to assign the community and role labels.\\
-We deployed our container on Minikube. Minikube is a virtual machine running in VirtualBox, in which a
-one-node Kubernetes cluester has already been deployed. The deployment of the container 
-was done by using the OpenFaas CLI, and its functionalities were tested by using both the invocation
-through the \textit{faas-cli} and the \textit{faas-gui}.\\
-The SLPA algorithm was tested locally by creating a mock delay matrix. This matrix should be symmetric and, 
-in order to have significant results, it should reflect the structure of a real network. In fact, drawing the network
-delays from a uniform distribution produces a single community in which all nodes have been put but doesn't correspond
-to any real-world network.
-When applied to a correctly build matrix, the algorithm works as expected. The big communities broken down by our Round Robin 
-implementation are still correct, but they look more sparse, since the assignment to the new smaller communities is done by
-cycling on an unordered list.
+The performance of the SLPA algorithm has been measured locally outside the container, due to 
+all the consideration done in the Functional Requirements section.
+The following tests have been done in \textit{Ubuntu 18.04.4 LTS} on a \textit{AMD Ryzen 7 1700 Eight-Core}Processor.
+\\
+The algorithm has been tested on the following inputs: number of nodes in the network, delay threshold and maximum community size.
+The number of nodes determines the size of the delay matrix. We tested networks with 10, 20, 50, 100, 200, 500, 1000, 2000 and 5000 nodes.
+As previously said, the delay threshold is a constraint to which all cells of the delay matrix are subjected to. Every arc with and edge value grater than the delay threshold
+is cancelled (the corresponding cell in the matrix is set to -1). We tested with the following thresholds: 0.1 , 0.3, 0.5, 0.7.
+The maximum community size limits the number of nodes that can be in a community and we tested the same values reported in the PAPS testing phase
+(10, 25, 50).\\
+For each combination of these inputs a delay matrix is built. It's a $NxN$ matrix, where $N$ is the number of nodes in the network.
+Every cell of the matrix has values between 0 and 1 drawn from a uniform probability distribution. In this way, the delay threshold
+can be used to maintain a certain percentage of edges.
+A delay threshold of 0.3 will roughly maintain the 30\% of the edges.
+For each input a test is run ten times, tracking the execution time. In order to avoid noisy measurements,
+the median of this values is considered instead of the mean.
+\par
+The figure \ref{fig:plotCommunity} plots the execution time in function of the number of nodes and delay threshold.
+For small networks the algorithm runs in a few millisecond, and it manages to complete in about 10 seconds networks
+with 1000 or 2000 nodes. SLPA starts to struggle with networks with 5000 nodes, starting to show an exponential trend.
+\par
+The figure \ref{fig:plotSize} highlights the fact that the maximum community size does not change the performance 
+of the algorithm, because the total execution time is dominated by SLPA. This means that Round Robin does not
+degrade performance, since its the only part of the algorithm affected by the community size, but just a constant cost regardless
+of network size.
