@@ -41,7 +41,7 @@ algorithm on the same network will give different results, creating each time di
 Figure \ref{fig:RR1} and \ref{fig:RR2} shows the effects of the Round Robin on the communities that were exceeding 
 in size. In this examples, the maximum size of a community was set to 5. In figure \ref{fig:RR1} SLPA returned
 two communities, one that included all the nodes from 1 to 8 while the other one included the remaining ones.
-These were broken down  by the RR, creating 4 communities that cannot be broken down in 4 different partitions.
+These were broken down  by the RR, creating 4 communities that cannot be separated in 4 different partitions.
 Figure \ref{fig:RR2} shows a luckier iteration of SLPA, that returned only one oversized community (from node 9
 to node 15). 
 \\
@@ -88,10 +88,9 @@ As previously said, the delay threshold is a constraint to which all cells of th
 is cancelled (the corresponding cell in the matrix is set to -1). We tested with the following thresholds: 0.1 , 0.3, 0.5, 0.7.
 The maximum community size limits the number of nodes that can be in a community and we tested the same values reported in the PAPS testing phase
 (10, 25, 50).\\
-For each combination of these inputs a delay matrix is built. It's a $NxN$ matrix, where $N$ is the number of nodes in the network.
+For each combination of these inputs a $NxN$ delay matrix is built, where $N$ is the number of nodes in the network.
 Every cell of the matrix has values between 0 and 1 drawn from a uniform probability distribution. In this way, the delay threshold
-can be used to maintain a certain percentage of edges.
-A delay threshold of 0.3 will roughly maintain the 30\% of the edges.
+can be used to maintain a certain percentage of edges (a delay threshold of 0.3 will roughly maintain the 30\% of the edges).
 For each input a test is run ten times, tracking the execution time. In order to avoid noisy measurements,
 the median of this values is considered instead of the mean.
 \par
